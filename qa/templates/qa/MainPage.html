@@ -1,0 +1,24 @@
+{% extends 'qa/Base.html'%}
+{% load static %}
+{% block content %}
+<div class="col-md-8">
+  <link href="{% static 'MainPage.css' %}?v1" rel="stylesheet">
+  <p class="title text-center">Это главная страница</p>
+  {% for question in questions%}
+    <div class="question bg-light">
+      <p>
+        <a href="{% url 'qa:question_detail' pk=question.id%}">
+          {{ question.title }}
+        </a>
+      </p>
+        <p class="text-justify text-dark">{{ question.text }}</p>
+        <!--<pre class="pre-scrollable">{{ question.text }}</pre>-->
+    </div>
+    <div class="row blockquote-footer container">
+      <div class="col text-left">{{ question.author }}</div>
+      <div class="col text-right">{{ question.createdate}}</div>
+    </div>
+  {% endfor %}
+</div>
+<!--</div>-->
+{% endblock %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<head xmlns="">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
+  <link href="{% static "Base.css" %}" rel="stylesheet">
+  <link href="{% static "chosen/chosen.css" %}" rel="stylesheet">
+  <link href="{% static "bootstrap-4.0.0-beta.2/css/bootstrap.min.css" %}" rel="stylesheet">
+
+  <script src="{% static "jquery-3.2.1.js" %}"></script>
+  <script src="{% static "bootstrap-4.0.0-beta.2/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "chosen/chosen.jquery.js" %}"></script>
+  <script src="{% static "Base.js" %}"></script>
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <meta name="csrf" content="{{ csrf_token }}">
+  </head>
+<body>
+  <div class="container">
+    {% block title %}
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="position: relative">
+      <!--<a class="navbar-brand" href="#">Navbar</a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto active">
+          <li class="nav-item active   justify-content-center">
+            <a class="nav-link" href="{% url 'qa:index' %}">На главную </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'qa:questions' %}"> перейдти к вопросам <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        {% if not request.user.is_authenticated %}
+            <button type="button" class="btn btn-outline-success my-2 my-lg-0">
+              <a class="login" href="{% url 'core:login' %}?next={{ request.get_full_path }}">Войти </a>
+            </button>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown">
+              {{ request.user }}
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'core:logout' %}">Выйти</a>
+              </div>
+            </div>
+          {% endif %}
+      </div>
+      </nav>
+      <div>
+      {% if not request.user.is_authenticated %}
+        <p><em>нету аккаунта?</em>
+          <a href="{% url 'core:signup' %}"><kbd>Create account</kbd></a>
+        </p>
+      {% endif %}
+    {% endblock %}
+    <h2>
+      <div>
+      {% block content %}
+      {% endblock %}
+      </div>
+    </h2>
+    <footer>Сдесь пролетел Карлсон</footer>
+  </div>
+</body>

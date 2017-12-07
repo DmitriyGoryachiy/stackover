@@ -1,0 +1,21 @@
+{% extends 'qa/Base.html' %}
+{% block content %}
+<div>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <div>{{ field.label_tag }}</div>
+        <div>{{ field }}</div>
+        {% if field.help_text %}
+          <!--<small style="color: grey">{{ field.help_text }}</small>-->
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+<form class="ajax-form" action="{% url 'qa:question_detail' pk=question.pk %}" method="post">
+  {% for field in form %}
+    <div class="col-md-12">{{ field.label_tag }}{{ field }}</div>
+    {% for error in field.errors %}
+      <b>{{ error }}</b>
+    {% endfor %}
+  {% endfor %}
+  <input type="submit" value="update">
+  {% csrf_token %}
+</form>
+
+
+<!--<div class="col-md-8">-->
+<!--<form action="" method="post">-->
+  <!--<div>-->
+    <!--<p><label for="id_title">Тема вопроса:</label></p>-->
+    <!--<p><input type="text" name="title" value="{{ question.title }}" required id="id_title" maxlength="255" class="col-md-12"/></p>-->
+    <!--<p><label for="id_text">Text:</label></p>-->
+    <!--<p><textarea name="text" id="id_text" rows="10" required class="col-md-12">-->
+        <!--{{ question.text }}-->
+    <!--</textarea></p>-->
+    <!--<input type="submit" value="update">-->
+  <!--</div>-->
+<!--</form>-->
+<!--</div>-->

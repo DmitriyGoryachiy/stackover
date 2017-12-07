@@ -1,0 +1,68 @@
+{% extends 'qa/Base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-8">
+<link href="{% static 'questions.css' %}?v1" rel="stylesheet">
+
+<div class="row blockquote-footer container">
+    <div class="col text-left">{{ question.author }}</div>
+    <div class="col text-right">{{ question.createdate}}</div>
+</div>
+    <div class="col text-right">
+        <span class="likecount" data-likes-url="{% url "qa:question_like_count" pk=question.pk%}" data-question-id="{{ question.id }}">{{ question.likecount }}</span>
+        likes
+      </div>
+    <p class="title text-center">{{ question.title }}</p>
+
+<h3><p class="text-justify text-dark">{{ question.text }}</p></h3>
+
+{% if request.user == question.author %}
+
+    <a  class="question-edit-link" href="{% url 'qa:question_update' pk=question.id%}">edit question</a>
+{% endif %}
+{% if user.is_authenticated %}
+    <a href="{% url 'qa:new_question' %}">Create new question</a>
+{% endif %}
+</p>
+{% for category in question.categories.all %}
+    <a href="{% url 'cat:category_detail' pk=category.id%}">{{ category }}</a>
+{% if not forloop.last%},{% endif %}
+{% endfor %}
+
+
+<p>
+    {% for answer in question.answers.all %}
+    <!--<p><div><em>{{ answer.author }}</em></div>-->
+        <!--<div>{{ answer.text }}</div></p>-->
+
+
+      <div>
+        <!--<a href="{% url 'qa:question_detail' pk=question.id%}">{{ question.title }}</a>-->
+        <p class="bg-light">{{ answer.text }}</p>
+        <!--<p class="text-justify text-dark">{{ question.text }}</p>-->
+      </div>
+      <div class="row blockquote-footer container">
+        <div class="col text-left">{{ question.author }}</div>
+        <div class="col text-right">{{ answer.createdate }}</div>
+      </div>
+
+    {% endfor %}
+</p>
+{% load widget_tweaks %}
+{% if request.user.is_authenticated %}
+<div>
+    <!--<a class="question-edit-link" href="{% url 'qa:question_update' pk=question.id%}">comment</a>-->
+    <!--<form action="" method="post">-->
+        <!--<p>{% render_field form.text style="resize:none" rows="4" class="col-md-12"  %}</p>-->
+        <!--{% csrf_token %}-->
+        <!--<input type="submit" value="answer">-->
+    <!--</form>-->
+</div>
+{% endif %}
+</div>
+
+<div class="bgdialog">
+        <div class="dialog"></div>
+    </div>
+{% endblock %}
+

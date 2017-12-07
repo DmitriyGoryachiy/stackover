@@ -1,0 +1,25 @@
+.login { color: white;
+}
+.login:hower { color: white;
+}
+
+.bgdialog{
+position: fixed;
+right: 0px;
+top: 0px;
+left: 0px;
+bottom: 0px;
+background-color: rgba(10,10,10,0.5);
+display: none;
+
+}
+
+.dialog {
+position: fixed;
+background-color: white;
+right: 10%;
+top: 10%;
+left: 10%;
+bottom: 10%;
+
+}

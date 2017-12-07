@@ -1,0 +1,18 @@
+{% extends 'qa/Base.html' %}
+
+{% block content %}
+<div class="col-md-8">
+<form action="" method="post">
+    {% csrf_token %}
+    <!--{{ form }}-->
+    <p class="col-md-12"><label for="id_username">Username:</label></p>
+    <p>
+        <input type="text" name="username"  class="col-md-12" autofocus required id="id_username" maxlength="150"/>
+    </p>
+    <p><label for="id_password">Password:</label></p>
+    <p><input type="password" name="password" required id="id_password" class="col-md-12"/>
+    </p>
+    <input type="submit" value="login">
+</form>
+
+{% endblock %}

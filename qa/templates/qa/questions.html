@@ -1,0 +1,82 @@
+{% extends 'qa/Base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<div class="col-md-8">
+  <link href="{% static 'questions.css' %}?v1" rel="stylesheet">
+  {% if request.user.is_authenticated %}
+    <p><a href="{% url 'qa:new_question' %}">Create new question</a></p>
+  {% endif %}
+
+  <form action="" method="get">
+  {% render_field form.text %}
+  <!--$('select').suggest()-->
+
+  <input type="text" name="search" value="" placeholder="Search here!" class="col-md-12">
+    <!--<script>-->
+       <!--$("#question.title").chosen()-->
+    <!--</script>-->
+  <p><select name="order_by">
+    <option value="title">Title asc</option>
+    <option value="-title">Title desc</option>
+    <option value="id">id</option>
+  </select></p>
+  <input type="submit" class="btn btn-outline-primary btn-lg" value="search">
+  </form>
+    <div class="bgdialog">
+      <div class="dialog"></div>
+    </div>
+    {% for question in questions%}
+      <div class="col text-right">
+      <!--{% if request.user == question.author %}-->
+        <!--<a class="question-edit-link" href="{% url 'qa:question_update' pk=question.id %}">edit question</a>-->
+      <!--{% endif %}-->
+
+        <span class="likecount" data-likes-url="{% url "qa:question_like_count" pk=question.pk%}" data-question-id="{{ question.id }}">{{ question.likecount }}</span>
+        likes
+      </div>
+      <div class="question bg-light">
+        <a href="{% url 'qa:question_detail' pk=question.id%}">{{ question.title }}</a>
+        <p class="text-justify text-dark">{{ question.text }}</p>
+      </div>
+      <div class="row blockquote-footer container">
+        <div class="col text-left">{{ question.author }}</div>
+        <div class="col text-right">{{ question.createdate}}</div>
+      </div>
+    {% endfor %}
+    {% if is_paginated %}
+<!--<div class="container">-->
+  <!--<ul class="pagination pagination-lg">-->
+    <!--&lt;!&ndash;<li class="page-item"><a class="page-link" href="#">Previous</a></li>&ndash;&gt;-->
+    <!--{% for i in paginator.page_range %}-->
+      <!--<li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>-->
+    <!--{% endfor %}-->
+    <!--&lt;!&ndash;<li class="page-item"><a class="page-link" href="#">Next</a></li>&ndash;&gt;-->
+  <!--</ul>-->
+<!--</div>-->
+
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+    {% else %}
+      <a class="disabled"><span>&laquo;</span></a>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <a class="active"><span> {{ i }} <span class="sr-only"></span></span></a>
+      {% else %}
+        <a><a href="?page={{ i }}"> {{ i }} </a></a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+    {% else %}
+      <a class="disabled"><span>&raquo;</span></a>
+    {% endif %}
+  </ul>
+  {% endif %}
+    <!--{% for p in paginator.page_range %}-->
+        <!--<a href="?page={{ p }}">{{ p }}</a>-->
+    <!--{% endfor %}-->
+</div>
+{% endblock %}
