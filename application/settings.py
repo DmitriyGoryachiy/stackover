@@ -25,7 +25,7 @@ SECRET_KEY = 'xigq55)g_!0^#o3+6&wpftx_ryk@wfq&=^7n0np99ay7l&m8n5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['warm-castle-39904.herokuapp.com']
 
 
 # Application definition
